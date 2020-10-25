@@ -105,7 +105,11 @@ module.exports = function(RED) {
                     try {
                         var responseObject = JSON.parse(response);
                         if (responseObject.status !== 1) { node.error("[57-pushover.js] Error: "+response); }
-                    }
+                            else if (responseObject !== undefined) {
+                                var output = { payload: responseObject}
+                                node.send( output )
+                                }
+                            }
                     catch(e) {
                         node.error("[57-pushover.js] Error: "+response);
                     }
@@ -113,6 +117,7 @@ module.exports = function(RED) {
             });
         }
     }
+
     RED.nodes.registerType("pushover",PushoverNode,{
         credentials: {
             deviceid: {type:"text"},
