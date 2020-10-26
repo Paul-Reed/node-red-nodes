@@ -12,7 +12,7 @@
         <label for="node-input-priority"><i class="fa fa-star"></i> Priority</label>
         <input type="text" id="node-input-priority" placeholder="0" style="width:50px;">
     </div>
-    <div class="form-row">
+    <div class="form-row" id='node-input-retrylevel'>
         <label for="node-input-retry"><i class="fa fa-repeat"></i> Retry</label>
         <input type="text" id="node-input-retry" placeholder="0" style="width:20%;">
         <select style="width:24%" id="node-input-retryunit">
@@ -21,7 +21,7 @@
           <option value= 3600>Hours</option>
         </select>
     </div>
-    <div class="form-row">
+    <div class="form-row"  id='node-input-expirelevel'>
         <label for="node-input-expire"><i class="fa fa-clock-o"></i> Expire</label>
         <input type="text" id="node-input-expire" placeholder="0" style="width:20%;">
         <select style="width:24%" id="node-input-expireunit">
@@ -30,7 +30,7 @@
           <option value= 3600>Hours</option>
         </select>
     </div>
-    <div class="form-row">
+    <div class="form-row"  id='node-input-urllevel'>
         <label for="node-input-receiptURL"><i class="fa fa-reply"></i> Receipt URL</label>
         <input type="text" id="node-input-receiptURL" placeholder="optional url">
     </div>
@@ -145,6 +145,18 @@
             $("#node-input-priority").spinner({
                 min:-2,
                 max:2
+            });
+            $("#node-input-priority").change(function () {
+                if ($(this).val() < 2) {
+                    $('#node-input-expirelevel').hide();
+		    $('#node-input-retrylevel').hide();
+                    $('#node-input-urllevel').hide();
+                }
+                else {
+                    $('#node-input-expirelevel').show();
+		    $('#node-input-retrylevel').show();
+                    $('#node-input-urllevel').show();
+                }
             });
         }
     });

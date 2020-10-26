@@ -130,7 +130,6 @@ module.exports = function(RED) {
             });
         }
     }
-
     RED.nodes.registerType("pushover",PushoverNode,{
         credentials: {
             deviceid: {type:"text"},
