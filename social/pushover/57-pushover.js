@@ -10,6 +10,13 @@ module.exports = function(RED) {
         this.title = n.title;
         this.device = n.device;
         this.priority = n.priority;
+	this.retry = n.retry;
+	this.retryunit = n.retryunit;
+	this.expire = n.expire;
+	this.expireunit = n.expireunit;
+	this.retrysecs = parseInt(this.retry * this.retryunit);
+	this.expiresecs = parseInt(this.expire * this.expireunit);
+	this.receiptURL = n.receiptURL;
         this.sound = n.sound;
         this.html = n.html;
         if (this.sound === '') { this.sound = null; }
@@ -33,6 +40,9 @@ module.exports = function(RED) {
         this.on("input",function(msg) {
             var title = node.title || msg.topic || "Node-RED";
             var pri = node.priority || msg.priority || 0;
+	    var retry = node.retrysecs || msg.retry ||  30;
+	    var expire = node.expiresecs || msg.expire || 600;
+	    var receiptURL = node.receiptURL || msg.receipt_url || null;
             var dev = node.device || msg.device;
             var sound = node.sound || msg.sound || null;
             var url = node.url || msg.url || null;
@@ -42,6 +52,8 @@ module.exports = function(RED) {
             if (isNaN(pri)) {pri=0;}
             if (pri > 2) {pri = 2;}
             if (pri < -2) {pri = -2;}
+	    if (retry < 30) {retry = 30;}
+	    if (expire > 10800) {expire = 10800;}
             if (!msg.payload) { msg.payload = ""; }
             if (typeof(msg.payload) === 'object') {
                 msg.payload = JSON.stringify(msg.payload);
@@ -52,8 +64,9 @@ module.exports = function(RED) {
                     message: msg.payload,
                     title: title,
                     priority: pri,
-                    retry: 30,
-                    expire: 600,
+                    retry: retry,
+                    expire: expire,
+		    callback: receiptURL,
                     html: html
                 };
                 if (dev) { pushmsg.device = dev; }

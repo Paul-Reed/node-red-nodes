@@ -13,6 +13,28 @@
         <input type="text" id="node-input-priority" placeholder="0" style="width:50px;">
     </div>
     <div class="form-row">
+        <label for="node-input-retry"><i class="fa fa-repeat"></i> Retry</label>
+        <input type="text" id="node-input-retry" placeholder="0" style="width:20%;">
+        <select style="width:24%" id="node-input-retryunit">
+          <option value=       1 selected>Seconds</option>
+          <option value=   60>Minutes</option>
+          <option value= 3600>Hours</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-expire"><i class="fa fa-clock-o"></i> Expire</label>
+        <input type="text" id="node-input-expire" placeholder="0" style="width:20%;">
+        <select style="width:24%" id="node-input-expireunit">
+          <option value=       1 selected>Seconds</option>
+          <option value=   60>Minutes</option>
+          <option value= 3600>Hours</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-receiptURL"><i class="fa fa-reply"></i> Receipt URL</label>
+        <input type="text" id="node-input-receiptURL" placeholder="optional url">
+    </div>
+    <div class="form-row">
         <label for="node-input-sound"><i class="fa fa-bell"></i> Sound</label>
         <select id="node-input-sound">
             <option></option>
@@ -94,6 +116,11 @@
             device: {value:""},
             title: {value:""},
             priority: {value:0},
+	    expire: {value:""},
+	    expireunit: {value:1},
+	    retry: {value:""},
+	    retryunit: {value:1},
+	    receiptURL: {value:""},
             sound: {value:""},
             url: {value:""},
             url_title: {value:""},
